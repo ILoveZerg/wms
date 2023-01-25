@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfers</title>
+    <style>
+        .grid-items {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+          gap: 10px;
+          padding: 0px;
+        }
+        .grid-items > div {
+          padding: 0 0;
+        }
+        .search-bar {
+          grid-column-start: span 3;
+        }
+        .pull-bar {
+          grid-column-start: span 3;
+        }
+    </style>
+</head>
+<body>
+<div class="grid-items">
+    <div class="search-bar">
+        <form action="/transfers/" method="GET">
+            {{ search_form }}
+        </form>
+    </div>
+    <div class="pull-bar">
+        <form action="/pull/" method="GET">
+            {{ start_pull_form }}
+            <input type="submit" value="Submit"/>
+        </form>
+
+    </div>
+    <div class="item-header">Name</div>
+    <div class="item-header">Box</div>
+    <div class="item-header">Quantity</div>
+    <div class="item-header">QuantityNeeded</div>
+    <div class="item-header">Destination</div>
+    <div class="item-header">Priority</div>
+    {% if transfer_objects %}
+        {% for transferItemGroup in transfer_objects %}
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.item.name }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.box.name }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.quantity }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.quantityNeeded }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.destination }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.Priority }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

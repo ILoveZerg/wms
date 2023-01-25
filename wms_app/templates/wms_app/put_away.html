@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Put Away</title>
+</head>
+<body>
+    {% if alert_message %}
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+             {{ alert_message }}
+        </div>
+    {% endif %}
+    <form action="/put_away/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ put_away_form }}
+            <input type="submit" value="Submit"/>
+    </form>
+
+</body>
+</html>
