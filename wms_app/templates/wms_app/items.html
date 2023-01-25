@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Items</title>
+    <style>
+    .grid-items {
+      display: grid;
+      grid-template-columns: 4fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 0px;
+    }
+    .grid-itemGroups {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 4fr;
+      gap: 0px;
+      font-size: .90em;
+      grid-column-start: span 7;
+      padding: 0px;
+    }
+    .grid-items > div {
+      padding: 0 0;
+    }
+    .grid-itemGroups > div {
+      padding: 0 0;
+    }
+    .search-bar {
+      grid-column-start: span 4;
+    }
+    .box-select {
+      grid-column-start: span 3;
+    }
+    </style>
+    <script>
+    function showItemGroups(item) {
+        fetch(`/items/${item}`)
+        .then(response => response.text())
+        .then(text => {
+            console.log(text);
+            document.querySelector('#item-group').innerHTML = text;
+        });
+
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('item').forEach(button => {
+            button.onclick = function() {
+                showItemGroups(this.dataset.section)
+            }
+        })
+    });
+    </script>
+</head>
+<body>
+<div class="grid-items">
+    <div class="search-bar">
+        <form action="/items/" method="GET">
+            {{ search_form }}
+        </form>
+    </div>
+    <div class="box-select">
+        <form action="/put_away/" method="GET">
+            {{ box_select_form }}
+        </form>
+    </div>
+    <div class="item-header">Name</div>
+    <div class="item-header">Manufact. Sku</div>
+    <div class="item-header">Custom Sku</div>
+    <div class="item-header">Brand</div>
+    <div class="item-header">Vendor</div>
+    <div class="item-header">Category</div>
+    <div class="item-header">LS Qty.</div>
+    {% for item in item_objects %}
+        <div class="item{{ item.id }}">{{ item.name }}</div>
+        <div class="item{{ item.id }}">{{ item.manufactureSku }}</div>
+        <div class="item{{ item.id }}">{{ item.customSku }}</div>
+        <div class="item{{ item.id }}">{{ item.brand.name }}</div>
+        <div class="item{{ item.id }}">{{ item.vendor.name }}</div>
+        <div class="item{{ item.id }}">{{ item.category.name }}</div>
+        <div class="item{{ item.id }}">{{ item.lightSpeedQuantity }}</div>
+        <div class="grid-itemGroups">
+            {% for itemGroup in item.itemgroup_set.all %}
+                {% if forloop.first %}
+                    <div class="itemGroup-header">Box</div>
+                    <div class="itemGroup-header">Location</div>
+                    <div class="itemGroup-header">Quantity</div>
+                    <div class="spacer"></div>
+                {% endif %}
+                <div class="itemGroup{{ itemGroup.id }}">{{ itemGroup.box.name }}</div>
+                <div class="itemGroup{{ itemGroup.id }}">{{ itemGroup.box.location.name }}</div>
+                <div class="itemGroup{{ itemGroup.id }}">{{ itemGroup.quantity }}</div>
+                <div class="spacer"></div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

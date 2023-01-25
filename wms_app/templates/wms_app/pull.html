@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pull</title>
+    <style>
+        .grid-items {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 0px;
+        }
+        .grid-pull {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0px;
+        }
+        .grid-items > div {
+            padding: 0 0;
+        }
+        .scan-bar {
+            grid-column-start: span 2;
+        }
+    </style>
+</head>
+<body>
+{% if alert_message %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+         {{ alert_message }}
+    </div>
+{% endif %}
+<div class="grid-pull">
+    <div class = "scan-bar">
+        <form action="/pull/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ pull_item_form }}
+            <input type="submit" value="Submit"/>
+            <div>{{ item_group.item.name }}</div>
+            <div>{{ item_group.box.name }}</div>
+        </form>
+    </div>
+</div>
+{% if transfer_objects %}
+    <div class="grid-items">
+        <div class="item-header">Name</div>
+        <div class="item-header">Box</div>
+        <div class="item-header">Quantity</div>
+        <div class="item-header">QuantityNeeded</div>
+        <div class="item-header">Destination</div>
+        <div class="item-header">Priority</div>
+        {% for transferItemGroup in transfer_objects %}
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.item.name }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.box.name }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.quantity }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.quantityNeeded }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.destination }}</div>
+            <div class="transferItemGroup{{ transferItemGroup.id }}">{{ transferItemGroup.Priority }}</div>
+        {% endfor %}
+{% endif %}
+</div>
+</body>
+</html>
