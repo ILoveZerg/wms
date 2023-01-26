@@ -240,6 +240,10 @@ def upload_data(request):
     }
     return render(request, 'wms_app/upload.html', context)
 
+@login_required
+def index(request):
+    msg = "Hello %s, you're logged in." % request.session['account']['name']
+    return HTTPResponse(msg)
 
 # Create your views here.
 
