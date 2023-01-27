@@ -14,6 +14,7 @@ from .forms import ItemSearchForm, UploadFileForm, PullForm, PullItemForm, Trans
 from .utilities import read_csv, read_csv_map, read_csv_split
 from authlib.integrations.django_client import OAuth
 from wms import settings
+import logging
 
 
 class PutAwayView(LoginRequiredMixin, View):
@@ -265,6 +266,8 @@ def login(request):
 
 def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
+    logger = logging.getLogger(__name__)
+    logger.debug(token)
     request.session['user'] = token['account']
     return redirect('/')
 
