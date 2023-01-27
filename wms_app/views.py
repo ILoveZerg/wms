@@ -270,7 +270,7 @@ def token(request):
     logger = logging.getLogger(__name__)
     logger.debug(token)
     try:
-        res = oauth.lightspeed.get('Account', token=token)
+        res = oauth.lightspeed.get('Account.json', token=token)
         logger.debug(res)
     except OAuthError as e:
         res = None
