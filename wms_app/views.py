@@ -268,16 +268,12 @@ def login(request):
 def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
     logger = logging.getLogger(__name__)
-    logger.debug(token)
     try:
         res = oauth.lightspeed.get('Account.json', token=token)
-        logger.debug(res)
     except OAuthError as e:
         res = None
-        logger.debug(e)
     if res and res.ok:
-        logger.debug(res.json())
-        request.session['user'] = res.json()
+        request.session['user'] = res['Account']
     return redirect('/')
 
 
