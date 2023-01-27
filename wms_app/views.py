@@ -274,7 +274,7 @@ def token(request):
     except OAuthError as e:
         res = None
         logger.debug(e)
-    if res.ok:
+    if res and res.ok:
         request.session['user'] = res.json()
     else:
         logger.debug(res.json())
