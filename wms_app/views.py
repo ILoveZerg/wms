@@ -273,7 +273,7 @@ def token(request):
     except OAuthError as e:
         res = None
     if res and res.ok:
-        request.session['user'] = res['Account']
+        request.session['user'] = res.json()
     return redirect('/')
 
 
