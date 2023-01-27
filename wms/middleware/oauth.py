@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 from wms import settings
 from wms_app import views
-
+import logging
 
 
 class OAuthMiddleware(MiddlewareMixin):
@@ -19,7 +19,7 @@ class OAuthMiddleware(MiddlewareMixin):
             for w in settings.OAUTH_URL_WHITELISTS:
                 if request.path.startswith(w):
                     return self.get_response(request)
-
+        logger = logging.getLogger(__name__)
         def update_token(token, refresh_token, access_token):
             request.session['token'] = token
             return None
@@ -33,6 +33,7 @@ class OAuthMiddleware(MiddlewareMixin):
             request.session['token'] = sso_client.authorize_access_token(request)
             if self.get_current_user(sso_client, request) is not None:
                 redirect_uri = request.session.pop('redirect_uri', None)
+                logger.info(redirect_uri)
                 if redirect_uri is not None:
                     return redirect(redirect_uri)
                 return redirect(views.index)
