@@ -255,7 +255,7 @@ def home(request):
     user = request.session.get('user')
     if user:
         user = json.dumps(user)
-    return render(request, 'home.html', context={'user': user})
+    return render(request, 'wms_app/home.html', context={'user': user})
 
 
 def login(request):
@@ -265,19 +265,13 @@ def login(request):
 
 def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
-    request.session['user'] = token['userinfo']
+    request.session['user'] = token['account']
     return redirect('/')
 
 
 def logout(request):
     request.session.pop('user', None)
     return redirect('/')
-
-
-@login_required
-def index(request):
-    msg = "Hello %s, you're logged in." % request.session['account']['name']
-    return HTTPResponse(msg)
 
 
 # Create your views here.
