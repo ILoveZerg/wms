@@ -10,6 +10,7 @@ urlpatterns = [
     path('put_away/', PutAwayView.as_view(), name='put_away'),
     path('', views.home),
     path('login/', views.login),
+    path('logout/', views.logout),
     path('token/', views.token, name='token')
 ]
 """

@@ -1,3 +1,4 @@
+from authlib import oauth2
 from django.db import models
 from simple_history.models import HistoricalRecords
 
@@ -10,6 +11,8 @@ from simple_history.models import HistoricalRecords
 # Location (1:N)-> Box(s)
 
 # Create your models here.
+class LightSpeedUser(oauth2.OAuth2User):
+    accountId = models.SmallIntegerField()
 
 
 class Brand(models.Model):
