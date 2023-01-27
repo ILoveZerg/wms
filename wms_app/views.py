@@ -275,10 +275,8 @@ def token(request):
         res = None
         logger.debug(e)
     if res and res.ok:
-        request.session['user'] = res.json()
-    else:
         logger.debug(res.json())
-    request.session['user'] = oauth.lightspeed.get('Account', token=token).json()
+        request.session['user'] = res.json()
     return redirect('/')
 
 
