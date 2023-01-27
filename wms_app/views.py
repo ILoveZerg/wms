@@ -268,7 +268,7 @@ def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
     logger = logging.getLogger(__name__)
     logger.debug(token)
-    request.session['user'] = await oauth.lightspeed.get('user', token=token)
+    request.session['user'] = oauth.lightspeed.get('Account', token=token)
     return redirect('/')
 
 
