@@ -1,5 +1,6 @@
 import csv, json
 
+from authlib.integrations.base_client import OAuthError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -268,6 +269,15 @@ def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
     logger = logging.getLogger(__name__)
     logger.debug(token)
+    try:
+        res = oauth.lightspeed.get('Account', token=token)
+    except OAuthError as e:
+        res = None
+        logger.debug(e)
+    if res.ok():
+        request.session['user'] = res.json()
+    else:
+        logger.debug(res.json())
     request.session['user'] = oauth.lightspeed.get('Account', token=token).json()
     return redirect('/')
 
