@@ -28,7 +28,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'wms.middleware.oauth.OAuthMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,7 +94,7 @@ OAUTH_CLIENT = {
         'scope': 'employee:inventory_read',
         'token_placement': 'header'
     },
-    'userinfo_endpoint': 'Account',
+    'userinfo_endpoint': 'https://api.lightspeedapp.com/API/V3/Account',
 }
 
 OAUTH_CLIENT_NAME = 'lightspeed'

@@ -1,9 +1,9 @@
-import csv
+import csv, json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from .models import Item, TransferItemGroup, ItemGroup, ItemBarcode, Box
@@ -12,6 +12,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .forms import ItemSearchForm, UploadFileForm, PullForm, PullItemForm, TransferSearchForm, BoxSelectForm, \
     PutAwayForm
 from .utilities import read_csv, read_csv_map, read_csv_split
+from authlib.integrations.django_client import OAuth
+from wms import settings
 
 
 class PutAwayView(LoginRequiredMixin, View):
@@ -240,10 +242,43 @@ def upload_data(request):
     }
     return render(request, 'wms_app/upload.html', context)
 
+
+oauth = OAuth()
+oauth.register(
+    name='lightspeed',
+    overwrite=True,
+    **settings.OAUTH_CLIENT
+)
+
+
+def home(request):
+    user = request.session.get('user')
+    if user:
+        user = json.dumps(user)
+    return render(request, 'home.html', context={'user': user})
+
+
+def login(request):
+    redirect_uri = request.build_absolute_uri(reverse('token'))
+    return oauth.lightspeed.authorize_redirect(request, redirect_uri)
+
+
+def token(request):
+    token = oauth.lightspeed.authorize_access_token(request)
+    request.session['user'] = token['userinfo']
+    return redirect('/')
+
+
+def logout(request):
+    request.session.pop('user', None)
+    return redirect('/')
+
+
 @login_required
 def index(request):
     msg = "Hello %s, you're logged in." % request.session['account']['name']
     return HTTPResponse(msg)
+
 
 # Create your views here.
 

@@ -1,14 +1,16 @@
 from django.urls import path
 from . import views
-from .views import ItemView, TransferView, PullView, PutAwayView, index
+from .views import ItemView, TransferView, PullView, PutAwayView
 
 urlpatterns = [
-    path("items/", ItemView.as_view(), name='items'),
-    path("transfers/", TransferView.as_view(), name='transfers'),
-    path("upload/", views.upload_data, name='upload_data'),
-    path("pull/", PullView.as_view(), name='pull'),
-    path("put_away/", PutAwayView.as_view(), name='put_away'),
-    path("", index)
+    path('items/', ItemView.as_view(), name='items'),
+    path('transfers/', TransferView.as_view(), name='transfers'),
+    path('upload/', views.upload_data, name='upload_data'),
+    path('pull/', PullView.as_view(), name='pull'),
+    path('put_away/', PutAwayView.as_view(), name='put_away'),
+    path('', views.home),
+    path('login/', views.login),
+    path('token/', views.token, name='token')
 ]
 """
     path("items/<str:search_term>/", views.item_search),
