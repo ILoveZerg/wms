@@ -242,22 +242,29 @@ def upload_data(request):
     context = {
         'file_form': file_form
     }
-    return render(request, 'wms_app/upload.html', context)
+    return render(request, 'upload.html', context)
+
+
+def update_token(request, token, refresh_token, access_token):
+    request.session['token'] = token
+    return None
 
 
 oauth = OAuth()
 oauth.register(
     name='lightspeed',
     overwrite=True,
-    **settings.OAUTH_CLIENT
+    **settings.OAUTH_CLIENT,
+    update_token=update_token
 )
 
 
 def home(request):
     user = request.session.get('user')
     if user:
-        user = json.dumps(user)
-    return render(request, 'home.html', context={'user': user})
+        return reverse('items')
+    else:
+        return reverse('login')
 
 
 def login(request):
@@ -274,7 +281,7 @@ def token(request):
         res = None
     if res and res.ok:
         request.session['user'] = res.json()
-    return redirect('home.html')
+    return redirect('../home.html')
 
 
 def logout(request):

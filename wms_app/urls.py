@@ -9,8 +9,8 @@ urlpatterns = [
     path('pull/', PullView.as_view(), name='pull'),
     path('put_away/', PutAwayView.as_view(), name='put_away'),
     path('', views.home),
-    path('login/', views.login),
-    path('logout/', views.logout),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('token/', views.token, name='token')
 ]
 """
