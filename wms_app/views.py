@@ -285,7 +285,7 @@ def token(request):
     except OAuthError as e:
         res = None
     if res and res.ok:
-        logger.debug(res)
+        logger.debug(res.json())
         request.session['user'] = res.json()
     return HttpResponseRedirect(reverse('items'))
 
