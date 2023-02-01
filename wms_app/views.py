@@ -86,6 +86,7 @@ class ItemView(View):
     template_name = "items.html"
 
     def get(self, request):
+        return HttpResponse(self.oauth.get('item').json())
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
                 search_term = request.GET.__getitem__('search_term')
