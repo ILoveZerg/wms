@@ -100,7 +100,8 @@ class ItemView(View):
     template_name = "items.html"
 
     def get(self, request):
-        return HttpResponse(oauth.lightspeed.get('item.json', token=request.session.get('token')))
+        accountid = request.session.get('user')
+        return HttpResponse(oauth.lightspeed.get(accountid + '/item.json', token=request.session.get('token')))
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
                 search_term = request.GET.__getitem__('search_term')
@@ -286,11 +287,7 @@ def token(request):
         res = None
     if res and res.ok:
         res_dict = json.loads(res.text)
-        logger.debug(res_dict)
-        #logger.debug(res_dict['Account'])
-        return HttpResponse(res_dict['Account']['accountID'])
-        request.session['user'] = res.json()
-
+        request.session['user'] = res_dict['Account']['accountID']
     return HttpResponseRedirect(reverse('items'))
 
 
