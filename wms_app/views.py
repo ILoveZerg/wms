@@ -264,7 +264,7 @@ def upload_data(request):
 
 
 def home(request):
-    user = request.session.get('user')
+    user = request.session.get('user', None)
     if user:
         return HttpResponseRedirect(reverse('items'))
     else:
@@ -278,6 +278,7 @@ def login(request):
 
 def token(request):
     token = oauth.lightspeed.authorize_access_token(request)
+    request.session['token'] = token
     logger = logging.getLogger(__name__)
     try:
         res = oauth.lightspeed.get('Account.json', token=token)
