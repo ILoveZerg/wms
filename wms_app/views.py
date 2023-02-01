@@ -286,7 +286,7 @@ def token(request):
         res = None
     if res and res.ok:
         logger.debug(res.json())
-        logger.debug(res.Account)
+        logger.debug(res['Account'])
         return HttpResponse(res.json())
         request.session['user'] = res.json()
 
