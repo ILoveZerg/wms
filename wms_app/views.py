@@ -79,7 +79,7 @@ class PutAwayView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse('put_away'))
 
 
-class ItemView(LoginRequiredMixin, View):
+class ItemView(View):
     login_url = 'login'
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
