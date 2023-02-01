@@ -84,6 +84,7 @@ TEMPLATES = [
 OAUTH_URL_WHITELISTS = []
 
 OAUTH_CLIENT = {
+    'client_name': 'lightspeed',
     'client_id': '1230262cdb25bd7485a1780b0c63b701a3d3eccd4598571524e469b7929ebc98',
     'client_secret': 'd936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
     'access_token_url': 'https://cloud.lightspeedapp.com/oauth/access_token.php',

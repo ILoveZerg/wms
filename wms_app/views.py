@@ -17,13 +17,6 @@ from authlib.integrations.django_client import OAuth
 from wms import settings
 import logging
 
-oauth = OAuth()
-oauth.register(
-    name='lightspeed',
-    overwrite=True,
-    **settings.OAUTH_CLIENT,
-)
-
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -124,6 +117,7 @@ class ItemView(View):
             return render(request, self.template_name, context)
         else:
             return HttpResponseRedirect(reverse('login'))
+
 
 class TransferView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -254,8 +248,6 @@ def upload_data(request):
         'file_form': file_form
     }
     return render(request, 'upload.html', context)
-
-
 
 
 def home(request):
