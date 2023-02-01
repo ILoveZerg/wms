@@ -257,9 +257,9 @@ oauth.register(
 def home(request):
     user = request.session.get('user')
     if user:
-        return reverse('items')
+        return HttpResponseRedirect(reverse('items'))
     else:
-        return reverse('login')
+        return HttpResponseRedirect(reverse('login'))
 
 
 def login(request):
@@ -276,7 +276,7 @@ def token(request):
         res = None
     if res and res.ok:
         request.session['user'] = res.json()
-    return reverse('items')
+    return HttpResponseRedirect(reverse('items'))
 
 
 def logout(request):
