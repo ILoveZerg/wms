@@ -286,8 +286,11 @@ def token(request):
         res = None
     if res and res.ok:
         res_dict = json.loads(res.text)
-        logger.debug(res.text)
         logger.debug(res_dict)
+        logger.debug(res_dict[0])
+        logger.debug(res_dict[1])
+        logger.debug(res_dict[2])
+        logger.debug(res_dict[3])
         return HttpResponse(res_dict['Account'][0])
         request.session['user'] = res.json()
 
