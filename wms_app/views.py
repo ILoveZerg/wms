@@ -17,8 +17,20 @@ from authlib.integrations.django_client import OAuth
 from wms import settings
 import logging
 
-oauth = OAuth()
-lightspeed = oauth.lightspeed
+OAuth().register(
+    name='lightspeed',
+    client_id='1230262cdb25bd7485a1780b0c63b701a3d3eccd4598571524e469b7929ebc98',
+    client_secret='d936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
+    access_token_url='https://cloud.lightspeedapp.com/oauth/access_token.php',
+    authorize_url='https://cloud.lightspeedapp.com/oauth/authorize.php',
+    api_base_url='https://api.lightspeedapp.com/API/V3/Account',
+    redirect_uri='https://nail.network/token',
+    client_kwargs={
+        'scope': 'employee:inventory_read',
+        'token_placement': 'header'
+    }
+)
+
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -90,7 +102,7 @@ class ItemView(View):
     def get(self, request):
         oauth = OAuth()
 
-        return HttpResponse(lightspeed.get('item').json())
+        return HttpResponse(oauth.lightspeed.get('item').json())
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
                 search_term = request.GET.__getitem__('search_term')
