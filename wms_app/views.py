@@ -288,7 +288,7 @@ def token(request):
         res_dict = json.loads(res.text)
         logger.debug(res.text)
         logger.debug(res_dict)
-        return HttpResponse(res_dict['@attributes']['Account']['accountID'])
+        return HttpResponse(res_dict['@attributes']['accountID'])
         request.session['user'] = res.json()
 
     return HttpResponseRedirect(reverse('items'))
