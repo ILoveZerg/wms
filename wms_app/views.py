@@ -245,17 +245,12 @@ def upload_data(request):
     return render(request, 'upload.html', context)
 
 
-def update_token(request, token, refresh_token, access_token):
-    request.session['token'] = token
-    return None
-
 
 oauth = OAuth()
 oauth.register(
     name='lightspeed',
     overwrite=True,
     **settings.OAUTH_CLIENT,
-    update_token=update_token
 )
 
 
