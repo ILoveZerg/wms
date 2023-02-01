@@ -276,7 +276,7 @@ def token(request):
         res = None
     if res and res.ok:
         request.session['user'] = res.json()
-    return redirect('../home.html')
+    return reverse('items')
 
 
 def logout(request):
