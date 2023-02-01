@@ -98,6 +98,7 @@ class ItemView(View):
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
     template_name = "items.html"
+
     def get(self, request):
         return HttpResponse(OAuth().lightspeed.get('item').json())
         if request.session.__contains__('user'):
