@@ -17,6 +17,8 @@ from authlib.integrations.django_client import OAuth
 from wms import settings
 import logging
 
+oauth = OAuth()
+lightspeed = oauth.lightspeed
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -87,7 +89,6 @@ class ItemView(View):
 
     def get(self, request):
         oauth = OAuth()
-        lightspeed = oauth.lightspeed
 
         return HttpResponse(lightspeed.get('item').json())
         if request.session.__contains__('user'):
