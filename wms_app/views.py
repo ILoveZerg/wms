@@ -17,6 +17,13 @@ from authlib.integrations.django_client import OAuth
 from wms import settings
 import logging
 
+oauth = OAuth()
+oauth.register(
+    name='lightspeed',
+    overwrite=True,
+    **settings.OAUTH_CLIENT,
+)
+
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -84,10 +91,10 @@ class ItemView(View):
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
     template_name = "items.html"
-    oauth = OAuth()
 
     def get(self, request):
-        return HttpResponse(self.oauth.lightspeed.get('item').json())
+        oauth = OAuth()
+        return HttpResponse(oauth.lightspeed.get('item').json())
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
                 search_term = request.GET.__getitem__('search_term')
@@ -249,13 +256,6 @@ def upload_data(request):
     return render(request, 'upload.html', context)
 
 
-
-oauth = OAuth()
-oauth.register(
-    name='lightspeed',
-    overwrite=True,
-    **settings.OAUTH_CLIENT,
-)
 
 
 def home(request):
