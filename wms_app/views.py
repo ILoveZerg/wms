@@ -86,33 +86,35 @@ class ItemView(View):
     template_name = "items.html"
 
     def get(self, request):
-        if 'search_term' in request.GET:
-            search_term = request.GET.__getitem__('search_term')
+        if request.session.__contains__('user'):
+            if 'search_term' in request.GET:
+                search_term = request.GET.__getitem__('search_term')
+            else:
+                search_term = ''
+            if 'has_quantity' in request.GET:
+                has_quantity = request.GET.__getitem__('has_quantity')
+            else:
+                has_quantity = ''
+            try:
+                item_objects = Item.objects.order_by('name')
+            except ObjectDoesNotExist:
+                item_objects = None
+            if item_objects:
+                if search_term:
+                    item_objects = item_objects.filter(
+                        Q(name__icontains=search_term) | Q(itembarcode__barcode=search_term) | Q(systemID=search_term)
+                    )
+                if has_quantity:
+                    item_objects = item_objects.filter(lightSpeedQuantity__gt=0)
+                item_objects = item_objects[:100].prefetch_related()
+            context = {
+                'item_objects': item_objects,
+                'search_form': self.search_form,
+                'box_select_form': self.box_select_form
+            }
+            return render(request, self.template_name, context)
         else:
-            search_term = ''
-        if 'has_quantity' in request.GET:
-            has_quantity = request.GET.__getitem__('has_quantity')
-        else:
-            has_quantity = ''
-        try:
-            item_objects = Item.objects.order_by('name')
-        except ObjectDoesNotExist:
-            item_objects = None
-        if item_objects:
-            if search_term:
-                item_objects = item_objects.filter(
-                    Q(name__icontains=search_term) | Q(itembarcode__barcode=search_term) | Q(systemID=search_term)
-                )
-            if has_quantity:
-                item_objects = item_objects.filter(lightSpeedQuantity__gt=0)
-            item_objects = item_objects[:100].prefetch_related()
-        context = {
-            'item_objects': item_objects,
-            'search_form': self.search_form,
-            'box_select_form': self.box_select_form
-        }
-        return render(request, self.template_name, context)
-
+            return HttpResponseRedirect(reverse('login'))
 
 class TransferView(LoginRequiredMixin, View):
     login_url = 'login'
