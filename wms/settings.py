@@ -93,21 +93,9 @@ OAUTH_CLIENT = {
     'client_kwargs': {
         'scope': 'employee:inventory_read',
         'token_placement': 'header'
-    },
-    'userinfo_endpoint': 'https://api.lightspeedapp.com/API/V3/Account.json',
+    }
+    #'userinfo_endpoint': 'https://api.lightspeedapp.com/API/V3/Account.json',
 }
-
-DEFAULT_AUTHENTICATION_CLASSES = [
-    'rest_framework.authentication.OAuth2Authentication',
-    'rest_framework.permissions.IsAuthenticated'
-]
-
-DEFAULT_PERMISSION_CLASSES = [
-    'rest_framework.authentication.OAuth2Authentication',
-    'rest_framework.permissions.IsAuthenticated'
-]
-
-AUTH_USER_MODEL = 'wms_app.LightSpeedUser'
 
 OAUTH_CLIENT_NAME = 'lightspeed'
 

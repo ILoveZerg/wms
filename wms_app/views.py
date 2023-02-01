@@ -21,7 +21,7 @@ import logging
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
     put_away_form = PutAwayForm()
-    template_name = "wms_app/put_away.html"
+    template_name = "put_away.html"
 
     # box_select_form = BoxSelectForm()
     def get(self, request):
@@ -83,7 +83,7 @@ class ItemView(LoginRequiredMixin, View):
     login_url = 'login'
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
-    template_name = "wms_app/items.html"
+    template_name = "items.html"
 
     def get(self, request):
         if 'search_term' in request.GET:
@@ -118,7 +118,7 @@ class TransferView(LoginRequiredMixin, View):
     login_url = 'login'
     search_form = TransferSearchForm()
     start_pull_form = PullForm()
-    template_name = 'wms_app/transfers.html'
+    template_name = 'transfers.html'
 
     def get(self, request):
         try:
@@ -143,7 +143,7 @@ class TransferView(LoginRequiredMixin, View):
 class PullView(LoginRequiredMixin, View):
     login_url = 'login'
     pull_item_form = PullItemForm()
-    template_name = 'wms_app/pull.html'
+    template_name = 'pull.html'
     stores = (
         ('1', 'ALP'),
         ('2', 'BH'),
@@ -257,7 +257,7 @@ def home(request):
     user = request.session.get('user')
     if user:
         user = json.dumps(user)
-    return render(request, 'wms_app/home.html', context={'user': user})
+    return render(request, 'home.html', context={'user': user})
 
 
 def login(request):
@@ -274,7 +274,7 @@ def token(request):
         res = None
     if res and res.ok:
         request.session['user'] = res.json()
-    return redirect('/')
+    return redirect('home.html')
 
 
 def logout(request):
