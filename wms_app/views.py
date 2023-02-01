@@ -84,6 +84,7 @@ class ItemView(View):
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
     template_name = "items.html"
+    oauth = OAuth()
 
     def get(self, request):
         return HttpResponse(self.oauth.lightspeed.get('item').json())
