@@ -93,8 +93,7 @@ OAUTH_CLIENT = {
     'client_kwargs': {
         'scope': 'employee:inventory_read',
         'token_placement': 'header'
-    },
-    'userinfo_endpoint': '.json'
+    }
 }
 
 OAUTH_CLIENT_NAME = 'lightspeed'
