@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.getenv('debug')
 
-ALLOWED_HOSTS = ['nail.network', 'www.nail.network', 'localhost']
+ALLOWED_HOSTS = ['nail.network', 'www.nail.network', 'localhost', '138.197.12.80']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
