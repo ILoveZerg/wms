@@ -282,7 +282,6 @@ def token(request):
         res = oauth.lightspeed.get('', token=token)
         logger.debug(res)
         logger.debug(res.text)
-        logger.debug(res.json())
     except OAuthError as e:
         res = None
     if res and res.ok:
