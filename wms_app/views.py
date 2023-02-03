@@ -96,7 +96,7 @@ class ItemView(View):
         accountid = request.session.get('user')
         token = request.session.get('token')
         logger = logging.getLogger(__name__)
-        item = oauth.lightspeed.get(accountid + '/item.json', token=token['access_token'])
+        item = oauth.lightspeed.get(accountid + '/item.json', token=token)
         logger.debug(accountid + '/item.json')
         return HttpResponse(item)
         if request.session.__contains__('user'):
@@ -279,7 +279,7 @@ def token(request):
     request.session['token'] = token
     logger = logging.getLogger(__name__)
     try:
-        res = oauth.lightspeed.get('.json', token=token['access_token'])
+        res = oauth.lightspeed.get('.json', token=token)
         logger.debug(res)
         logger.debug(res.text)
         logger.debug(res.json())
