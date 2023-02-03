@@ -94,9 +94,9 @@ class ItemView(View):
 
     def get(self, request):
         accountid = request.session.get('user')
-        token = request.session.get('token')
+        current_token = request.session.get('token')
         logger = logging.getLogger(__name__)
-        item = oauth.lightspeed.get(accountid + '/item.json', token=token)
+        item = oauth.lightspeed.get(accountid + '/item.json', token=current_token)
         logger.debug(accountid + '/item.json')
         logger.debug(item)
         return HttpResponse(item)
