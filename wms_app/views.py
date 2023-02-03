@@ -1,6 +1,7 @@
 import csv, json
 
 from authlib.integrations.base_client import OAuthError
+from authlib.oauth2.rfc6749 import OAuth2Token
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -16,21 +17,13 @@ from .utilities import read_csv, read_csv_map, read_csv_split
 from authlib.integrations.django_client import OAuth
 from wms import settings
 import logging
+
 oauth = OAuth()
 oauth.register(
-    name='lightspeed',
-    client_id='1230262cdb25bd7485a1780b0c63b701a3d3eccd4598571524e469b7929ebc98',
-    client_secret='d936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
-    access_token_url='https://cloud.lightspeedapp.com/oauth/access_token.php',
-    authorize_url='https://cloud.lightspeedapp.com/oauth/authorize.php',
-    api_base_url='https://api.lightspeedapp.com/API/V3/Account',
-    redirect_uri='https://nail.network/token',
-    client_kwargs={
-        'scope': 'employee:inventory_read',
-        'token_placement': 'header'
-    }
+    settings.OAUTH_CLIENT_NAME,
+    overwrite=True,
+    **settings.OAUTH_CLIENT
 )
-
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -101,7 +94,7 @@ class ItemView(View):
 
     def get(self, request):
         accountid = request.session.get('user')
-        item = oauth.lightspeed.get('/' + accountid + '/item.json', token=request.session.get('token'))
+        item = oauth.lightspeed.get('/' + accountid + '/item.json', token=OAuth2Token(token))
         return HttpResponse(item)
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:

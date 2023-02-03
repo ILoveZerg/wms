@@ -2,6 +2,7 @@ from authlib.integrations.base_client import OAuthError
 from authlib.integrations.django_client import OAuth
 from authlib.oauth2.rfc6749 import OAuth2Token
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 from wms import settings
 from wms_app import views
@@ -20,6 +21,7 @@ class OAuthMiddleware(MiddlewareMixin):
                 if request.path.startswith(w):
                     return self.get_response(request)
         logger = logging.getLogger(__name__)
+
         def update_token(token, refresh_token, access_token):
             request.session['token'] = token
             return None
@@ -36,7 +38,7 @@ class OAuthMiddleware(MiddlewareMixin):
                 logger.info(redirect_uri)
                 if redirect_uri is not None:
                     return redirect(redirect_uri)
-                return redirect(views.index)
+                return redirect(reverse('items'))
 
         if request.session.get('token', None) is not None:
             current_user = self.get_current_user(sso_client, request)
