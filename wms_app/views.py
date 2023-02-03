@@ -276,13 +276,13 @@ def token(request):
     request.session['token'] = token
     logger = logging.getLogger(__name__)
     try:
-        res = oauth.lightspeed.get('Account.json', token=OAuth2Token(token))
+        res = oauth.lightspeed.get('Account.json', token=token)
     except OAuthError as e:
         res = None
     if res and res.ok:
         res_dict = json.loads(res.text)
         request.session['user'] = res_dict['Account']['accountID']
-    return HttpResponseRedirect(reverse('items'))
+    return redirect(reverse('items'))
 
 
 def logout(request):
