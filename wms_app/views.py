@@ -86,7 +86,7 @@ class PutAwayView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse('put_away'))
 
 
-class ItemView(oauth, View):
+class ItemView(View):
     login_url = 'login'
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
@@ -94,7 +94,7 @@ class ItemView(oauth, View):
 
     def get(self, request):
         accountid = request.session.get('user')
-        item = self.oauth.lightspeed.get(accountid + '/item.json', token=OAuth2Token(token))
+        item = super.oauth.lightspeed.get(accountid + '/item.json', token=OAuth2Token(token))
         return HttpResponse(item)
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
