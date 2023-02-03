@@ -91,10 +91,11 @@ class ItemView(View):
     search_form = ItemSearchForm()
     box_select_form = BoxSelectForm()
     template_name = "items.html"
+    oauth = OAuth()
 
     def get(self, request):
         accountid = request.session.get('user')
-        item = oauth.lightspeed.get('/' + accountid + '/item.json', token=OAuth2Token(token))
+        item = self.oauth.lightspeed.get(accountid + '/item.json', token=OAuth2Token(token))
         return HttpResponse(item)
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
