@@ -94,7 +94,8 @@ class ItemView(View):
 
     def get(self, request):
         accountid = request.session.get('user')
-        item = oauth.lightspeed.get(accountid + '/item.json', token=OAuth2Token(token))
+        token = request.session.get('token')
+        item = oauth.lightspeed.get(accountid + '/item.json', token=token)
         return HttpResponse(item)
         if request.session.__contains__('user'):
             if 'search_term' in request.GET:
