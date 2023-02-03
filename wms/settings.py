@@ -91,8 +91,7 @@ OAUTH_CLIENT = {
     'api_base_url': 'https://api.lightspeedapp.com/API/V3/Account',
     'redirect_uri': 'https://nail.network/token',
     'client_kwargs': {
-        'scope': 'employee:inventory_read',
-        'token_placement': 'header'
+        'scope': 'employee:inventory_read'
     }
 }
 
