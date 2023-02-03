@@ -276,7 +276,7 @@ def token(request):
     request.session['token'] = token
     logger = logging.getLogger(__name__)
     try:
-        res = oauth.lightspeed.get('.json', token=OAuth2Token(token))
+        res = oauth.lightspeed.get('.json', token=token)
         logger.debug(res)
         logger.debug(res.text)
         logger.debug(res.json())
