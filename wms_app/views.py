@@ -96,7 +96,7 @@ class ItemView(View):
         accountid = request.session.get('user')
         token = request.session.get('token')
         logger = logging.getLogger(__name__)
-        item = oauth.lightspeed.get(accountid + '/item.json', token=token)
+        item = oauth.lightspeed.get(accountid + '/item.json', token=token['access_token'])
         logger.debug(accountid + '/item.json')
         return HttpResponse(item)
         if request.session.__contains__('user'):
