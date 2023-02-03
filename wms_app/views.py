@@ -20,7 +20,7 @@ import logging
 
 oauth = OAuth()
 oauth.register(
-    settings.OAUTH_CLIENT_NAME,
+    'lightspeed',
     overwrite=True,
     **settings.OAUTH_CLIENT
 )
