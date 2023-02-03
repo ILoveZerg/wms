@@ -88,7 +88,7 @@ OAUTH_CLIENT = {
     'client_secret': 'd936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
     'access_token_url': 'https://cloud.lightspeedapp.com/oauth/access_token.php',
     'authorize_url': 'https://cloud.lightspeedapp.com/oauth/authorize.php',
-    'api_base_url': 'https://api.lightspeedapp.com/API/V3/Account/',
+    'api_base_url': 'https://api.lightspeedapp.com/API/V3/Account',
     'redirect_uri': 'https://nail.network/token',
     'client_kwargs': {
         'scope': 'employee:inventory_read',
