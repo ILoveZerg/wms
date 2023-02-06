@@ -288,7 +288,7 @@ def token(request):
         #logger.debug(res_dict)
         #logger.debug(user.text.json())
         #request.session['user'] = user.json()
-    return HttpResponse(user.text) #redirect(reverse('items'))
+    return HttpResponse(user.session) #redirect(reverse('items'))
 
 
 def logout(request):
