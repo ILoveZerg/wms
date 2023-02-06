@@ -283,6 +283,7 @@ def token(request):
     except OAuthError as e:
         user = None
     if user.ok:
+        logger.debug(user.text)
         res_dict = json.loads(user.text)
         logger.debug(res_dict)
         logger.debug(user.text)
