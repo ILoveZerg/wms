@@ -288,6 +288,9 @@ def token(request):
         #logger.debug(res_dict)
         #logger.debug(user.text.json())
         #request.session['user'] = user.json()
+    logger.debug(user.apparent_encoding)
+    logger.debug(user.url)
+    logger.debug(user.json())
     return HttpResponse(user.session) #redirect(reverse('items'))
 
 
