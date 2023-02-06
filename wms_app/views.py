@@ -21,6 +21,7 @@ import logging
 oauth = OAuth()
 oauth.register(
     name='lightspeed'
+    **settings.AUTHLIB_OAUTH_CLIENTS
 )
 
 class PutAwayView(LoginRequiredMixin, View):
@@ -269,10 +270,9 @@ def home(request):
 
 
 def login(request):
+    lightspeed = oauth.create_client('lightspeed')
     redirect_uri = request.build_absolute_uri(reverse('token'))
-    logger = logging.getLogger(__name__)
-    logger.debug(redirect_uri)
-    return oauth.lightspeed.authorize_redirect(request, redirect_uri)
+    return lightspeed.authorize_redirect(request, redirect_uri)
 
 
 def token(request):
