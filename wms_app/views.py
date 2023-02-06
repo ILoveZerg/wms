@@ -273,7 +273,7 @@ def home(request):
 
 
 def login(request):
-    redirect_uri = 'http://nail.network/token'
+    redirect_uri = 'https://nail.network/token'
     return lightspeed.authorize_redirect(request)
 
 
