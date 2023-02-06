@@ -286,7 +286,7 @@ def token(request):
     if user.ok:
         #res_dict = json.loads(user.text)
         #logger.debug(res_dict)
-        logger.debug(user.json())
+        logger.debug(user.text.json())
         #request.session['user'] = user.json()
     return redirect(reverse('items'))
 
