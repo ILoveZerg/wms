@@ -20,9 +20,7 @@ import logging
 
 oauth = OAuth()
 oauth.register(
-    'lightspeed',
-    overwrite=True,
-    **settings.OAUTH_CLIENT
+    name='lightspeed'
 )
 
 class PutAwayView(LoginRequiredMixin, View):
@@ -276,20 +274,18 @@ def login(request):
 
 
 def token(request):
-    token = oauth.lightspeed.authorize_access_token(request)
-    request.session['token'] = token
+    current_token = oauth.lightspeed.authorize_access_token(request)
+    request.session['token'] = current_token
     logger = logging.getLogger(__name__)
     try:
-        res = oauth.lightspeed.get('Account.json', token=token)
-        logger.debug(res)
-        logger.debug(res.text)
+        user = oauth.lightspeed.get('Session.json', token=current_token)
     except OAuthError as e:
-        res = None
-    if res and res.ok:
-        res_dict = json.loads(res.text)
+        user = None
+    if user.ok:
+        res_dict = json.loads(user.text)
         logger.debug(res_dict)
-        logger.debug(res_dict['Account']['accountID'])
-        request.session['user'] = res_dict['Account']['accountID']
+        logger.debug(user.text)
+        #request.session['user'] = res_dict['Account']['accountID']
     return redirect(reverse('items'))
 
 

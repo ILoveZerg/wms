@@ -84,14 +84,17 @@ TEMPLATES = [
 OAUTH_URL_WHITELISTS = []
 
 OAUTH_CLIENT = {
-    'client_id': '1230262cdb25bd7485a1780b0c63b701a3d3eccd4598571524e469b7929ebc98',
-    'client_secret': 'd936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
-    'access_token_url': 'https://cloud.lightspeedapp.com/oauth/access_token.php',
-    'authorize_url': 'https://cloud.lightspeedapp.com/oauth/authorize.php',
-    'api_base_url': 'https://api.lightspeedapp.com/API/V3/Account',
-    'redirect_uri': 'https://nail.network/token',
-    'client_kwargs': {
-        'scope': 'employee:inventory_read'
+    'lightspeed': {
+        'client_id': '1230262cdb25bd7485a1780b0c63b701a3d3eccd4598571524e469b7929ebc98',
+        'client_secret': 'd936758a5852fbf5788641a29df650065ce2ea38ba19bce670e6672a8e7db776',
+        'access_token_url': 'https://cloud.lightspeedapp.com/oauth/access_token.php',
+        'authorize_url': 'https://cloud.lightspeedapp.com/oauth/authorize.php',
+        'api_base_url': 'https://api.lightspeedapp.com/API',
+        'redirect_uri': 'https://nail.network/token',
+        'client_kwargs': {
+            'scope': 'employee:inventory_read'
+        },
+        'userinfo_endpoint': 'https://api.lightspeedapp.com/API/Session.json'
     }
 }
 
