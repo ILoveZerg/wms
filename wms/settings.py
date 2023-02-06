@@ -93,8 +93,8 @@ AUTHLIB_OAUTH_CLIENTS = {
         'redirect_uri': 'http://nail.network/token',
         'client_kwargs': {
             'scope': 'employee:inventory_read'
-        },
-        'userinfo_endpoint': 'https://api.lightspeedapp.com/API/Session.json'
+        }
+        #'userinfo_endpoint': 'https://api.lightspeedapp.com/API/Session.json'
     }
 }
 
