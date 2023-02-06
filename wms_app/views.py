@@ -273,8 +273,8 @@ def home(request):
 
 
 def login(request):
-    #redirect_uri = ''http://nail.network/token''
-    return lightspeed.authorize_redirect(request)#, redirect_uri)
+    redirect_uri = 'http://nail.network/token'
+    return lightspeed.authorize_redirect(request, redirect_uri)
 
 
 def token(request):
@@ -283,7 +283,7 @@ def token(request):
     request.session['token'] = current_token
     logger = logging.getLogger(__name__)
     try:
-        user = lightspeed.get('Session.json', token=current_token)
+        user = lightspeed.get('Session.json')
     except OAuthError as e:
         user = None
     if user.ok:
