@@ -282,14 +282,14 @@ def token(request):
         user = lightspeed.get('Session.json', token=current_token)
     except OAuthError as e:
         user = None
-    #if user.ok:
+    if user.ok:
         #res_dict = json.loads(user.text)
         #logger.debug(res_dict)
         #logger.debug(user.text.json())
         #request.session['user'] = user.json()
     logger.debug(user.apparent_encoding)
     logger.debug(user.url)
-    logger.debug(user.json())
+    #logger.debug(user.json())
     return HttpResponse(user.session) #redirect(reverse('items'))
 
 
