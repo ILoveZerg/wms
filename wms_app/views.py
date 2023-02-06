@@ -290,7 +290,7 @@ def token(request):
         logger.debug(user.apparent_encoding)
         logger.debug(user.url)
     #logger.debug(user.json())
-    return HttpResponse(user.session) #redirect(reverse('items'))
+    return redirect(reverse('items'))
 
 
 def logout(request):
