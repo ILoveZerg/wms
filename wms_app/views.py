@@ -275,18 +275,20 @@ def login(request):
 
 
 def token(request):
-    current_token = oauth.lightspeed.authorize_access_token(request)
+    lightspeed = oauth.create_client('lightspeed')
+    current_token = lightspeed.authorize_access_token(request)
     request.session['token'] = current_token
     logger = logging.getLogger(__name__)
     try:
         user = oauth.lightspeed.get('Session.json', token=current_token)
+        logger.debug(user)
+        logger.debug(user.txt)
     except OAuthError as e:
         user = None
     if user.ok:
         logger.debug(user.text)
-        res_dict = json.loads(user.text)
-        logger.debug(res_dict)
-        logger.debug(user.text)
+        #res_dict = json.loads(user.text)
+        #logger.debug(res_dict)
         #request.session['user'] = res_dict['Account']['accountID']
     return redirect(reverse('items'))
 
