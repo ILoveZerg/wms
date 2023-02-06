@@ -275,7 +275,7 @@ def login(request):
 
 
 def token(request):
-    current_token = lightspeed.authorize_access_token()
+    current_token = lightspeed.authorize_access_token(request)
     request.session['token'] = current_token
     logger = logging.getLogger(__name__)
     try:
