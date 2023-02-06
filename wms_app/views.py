@@ -20,9 +20,11 @@ import logging
 
 oauth = OAuth()
 oauth.register(
-    name='lightspeed'
+    name='lightspeed',
+    overwrite=True
 )
 lightspeed = oauth.create_client('lightspeed')
+
 
 class PutAwayView(LoginRequiredMixin, View):
     login_url = 'login'
@@ -278,6 +280,7 @@ def login(request):
 
 def token(request):
     current_token = lightspeed.authorize_access_token(request)
+
     request.session['token'] = current_token
     logger = logging.getLogger(__name__)
     try:
@@ -285,13 +288,13 @@ def token(request):
     except OAuthError as e:
         user = None
     if user.ok:
-        #res_dict = json.loads(user.text)
-        #logger.debug(res_dict)
-        #logger.debug(user.text.json())
-        #request.session['user'] = user.json()
+        # res_dict = json.loads(user.text)
+        # logger.debug(res_dict)
+        # logger.debug(user.text.json())
+        # request.session['user'] = user.json()
         logger.debug(user.apparent_encoding)
         logger.debug(user.url)
-    #logger.debug(user.json())
+    # logger.debug(user.json())
     return redirect(reverse('items'))
 
 
