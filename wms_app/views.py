@@ -20,8 +20,7 @@ import logging
 
 oauth = OAuth()
 oauth.register(
-    name='lightspeed',
-    overwrite=True
+    name='lightspeed'
 )
 lightspeed = oauth.create_client('lightspeed')
 
@@ -274,7 +273,7 @@ def home(request):
 
 
 def login(request):
-    redirect_uri = request.build_absolute_uri(reverse('token'))
+    redirect_uri = reverse('token')
     return lightspeed.authorize_redirect(request, redirect_uri)
 
 
