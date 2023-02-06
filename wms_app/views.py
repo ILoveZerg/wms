@@ -283,12 +283,12 @@ def token(request):
         user = oauth.lightspeed.get('Session.json', token=current_token)
     except OAuthError as e:
         user = None
-    if user.ok:
+    #if user.ok:
         #res_dict = json.loads(user.text)
         #logger.debug(res_dict)
-        logger.debug(user.text.json())
+        #logger.debug(user.text.json())
         #request.session['user'] = user.json()
-    return redirect(reverse('items'))
+    return user #redirect(reverse('items'))
 
 
 def logout(request):
