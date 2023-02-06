@@ -270,6 +270,8 @@ def home(request):
 
 def login(request):
     redirect_uri = request.build_absolute_uri(reverse('token'))
+    logger = logging.getLogger(__name__)
+    logger.debug(redirect_uri)
     return oauth.lightspeed.authorize_redirect(request, redirect_uri)
 
 

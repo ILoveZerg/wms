@@ -90,7 +90,7 @@ AUTHLIB_OAUTH_CLIENTS = {
         'access_token_url': 'https://cloud.lightspeedapp.com/oauth/access_token.php',
         'authorize_url': 'https://cloud.lightspeedapp.com/oauth/authorize.php',
         'api_base_url': 'https://api.lightspeedapp.com/API',
-        'redirect_uri': 'https://nail.network/token',
+        'redirect_uri': 'http://nail.network/token',
         'client_kwargs': {
             'scope': 'employee:inventory_read'
         },
