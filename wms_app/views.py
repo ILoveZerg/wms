@@ -92,9 +92,11 @@ class ItemView(View):
     template_name = "items.html"
 
     def get(self, request):
-        accountid = request.session.get('user')
-        current_token = request.session.get('token')
         logger = logging.getLogger(__name__)
+        accountid = request.session.get('user')
+        logger.debug(accountid)
+        current_token = request.session.get('token')
+
         item = oauth.lightspeed.get(accountid + '/item.json', token=current_token)
         logger.debug(accountid + '/item.json')
         logger.debug(item)
